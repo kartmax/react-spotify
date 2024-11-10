@@ -1,25 +1,48 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useRef } from "react";
+import Header from "./Header";
+import Main from "./Main";
+import Registration from "./Registration";
+import Sidebar from "./Sidebar";
+import SidebarOverlay from "./SidebarOverlay";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+    const contentWrapperScrollingRef = useRef(null);
+    let isEnableScrolling = true;
+
+    function toggleEnableScrolling (isEnable) {
+        isEnableScrolling = isEnable;
+    }
+
+    function handleScrollingWrapper (event) {
+        if(isEnableScrolling) return;
+
+        event.preventDefault();
+        event.stopPropagation();
+    }
+
+    useEffect(() => {
+        const contentWrapper = contentWrapperScrollingRef.current;
+        contentWrapper.addEventListener('wheel', handleScrollingWrapper);
+        return () => contentWrapper.removeEventListener('wheel', handleScrollingWrapper);
+    })
+
+
+    return (
+        <>
+            <div className="flex flex-grow overflow-auto">
+                <Sidebar />
+                <SidebarOverlay />
+
+                <div className="flex-1 overflow-auto" ref={contentWrapperScrollingRef}>
+                    <Header />
+                    <Main toggleEnableScrolling={toggleEnableScrolling} />
+                </div>
+            </div>
+
+            <Registration />
+        </>
+    );
 }
 
 export default App;
