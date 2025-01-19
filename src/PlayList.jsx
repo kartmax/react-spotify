@@ -17,6 +17,18 @@ const dataContextMenu = [
             },
             {
                 label: 'Embed playlist'
+            },
+            {
+                label: 'Copy link to playlist 1'
+            },
+            {
+                label: 'Embed playlist 1'
+            },
+            {
+                label: 'Copy link to playlist 2'
+            },
+            {
+                label: 'Embed playlist 2'
             }
         ]
     },
@@ -28,6 +40,8 @@ const dataContextMenu = [
     },
 ];
 
+const clickPosition = {};
+
 function PlayList({ classesHiddenVisible, cover, title, description, toggleEnableScrolling }) {
     const [isOpenContextMenu, setIsOpenContextMenu] = useState(false);
     const [positionContextMenu, setPositionContextMenu] = useState({x: null, y: null});
@@ -35,14 +49,34 @@ function PlayList({ classesHiddenVisible, cover, title, description, toggleEnabl
     const playListRef = useRef(null);
     const contextMenuRef = useRef(null);
 
-    useLayoutEffect(
-        () => {
-            if(isOpenContextMenu) {
-                contextMenuRef.current.style.left = `${positionContextMenu.x}px`;
-                contextMenuRef.current.style.top = `${positionContextMenu.y}px`;
-            }
-            toggleEnableScrolling(!isOpenContextMenu);
+    function updateHorizontalPositionContextMenu () {
+        const menuWidth = contextMenuRef.current.offsetWidth;
+        const shouldMoveLeft = menuWidth > window.innerWidth - clickPosition.x;
+
+        contextMenuRef.current.style.left = shouldMoveLeft
+            ? `${positionContextMenu.x - menuWidth}px`
+            : `${positionContextMenu.x}px`;
+    }
+
+    function updateVerticalPositionContextMenu () {
+        const menuHeight = contextMenuRef.current.offsetHeight;
+        const shouldMoveTop = menuHeight > window.innerHeight - clickPosition.y;
+
+        contextMenuRef.current.style.top = shouldMoveTop
+            ? `${positionContextMenu.y - menuHeight}px`
+            : `${positionContextMenu.y}px`;
+    }
+
+    function updateCoordinateContextMenu () {
+        if(isOpenContextMenu) {
+            updateHorizontalPositionContextMenu();
+            updateVerticalPositionContextMenu();
         }
+        toggleEnableScrolling(!isOpenContextMenu);
+    }
+
+    useLayoutEffect(
+        () => updateCoordinateContextMenu()
     )
 
     useEffect(() => {
@@ -63,7 +97,9 @@ function PlayList({ classesHiddenVisible, cover, title, description, toggleEnabl
     const openContextMenu = (event) => {
         event.preventDefault();
         setIsOpenContextMenu(true);
-        console.log('contextmenu')
+
+        clickPosition.x = event.clientX;
+        clickPosition.y = event.clientY;
         
         setPositionContextMenu( 
             {

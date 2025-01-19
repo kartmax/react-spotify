@@ -1,9 +1,9 @@
 import React from "react";
 import PlayListContextMenuItem from "./PlayListContextMenuItem";
 
-function PlayListContextMenu({ dataContextMenu, isSubMenu }, ref) {
+function PlayListContextMenu({ dataContextMenu, isSubMenu, menuPositionClasses }, ref) {
     const listClasses = isSubMenu
-        ? "absolute left-full top-0 bg-[#282828] text-[#eaeaea] text-sm p-1 rounded shadow-xl whitespace-nowrap invisible peer-hover:visible hover:visible"
+        ? `absolute bg-[#282828] text-[#eaeaea] text-sm p-1 rounded shadow-xl whitespace-nowrap ${menuPositionClasses}`
         : "absolute z-10 bg-[#282828] text-[#eaeaea] text-sm p-1 rounded shadow-xl whitespace-nowrap divide-y divide-[#3e3e3e]";
 
     return (

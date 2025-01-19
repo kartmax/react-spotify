@@ -4,6 +4,7 @@
 
 html {
     scrollbar-color: #333 black;
+    overflow: hidden;
 }
 
 .grid-cols-custom-main {
