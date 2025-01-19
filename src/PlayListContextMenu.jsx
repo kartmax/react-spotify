@@ -1,5 +1,6 @@
 import React from "react";
 import PlayListContextMenuItem from "./PlayListContextMenuItem";
+import PlayListContextMenuItemWithSubmenu from "./PlayListContextMenuItemWithSubmenu";
 
 function PlayListContextMenu({ dataContextMenu, isSubMenu, menuPositionClasses }, ref) {
     const listClasses = isSubMenu
@@ -9,7 +10,9 @@ function PlayListContextMenu({ dataContextMenu, isSubMenu, menuPositionClasses }
     return (
         <ul className={listClasses} ref={ref}>
             {dataContextMenu.map(dataItem =>
-                <PlayListContextMenuItem key={dataItem.label} {...dataItem} />
+                dataItem.subMenuItems
+                    ? <PlayListContextMenuItemWithSubmenu key={dataItem.label} {...dataItem} />
+                    : <PlayListContextMenuItem key={dataItem.label} {...dataItem} />
             )}
         </ul>
     )

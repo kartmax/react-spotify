@@ -7,13 +7,13 @@ import PlayListTitle from "./PlayListTitle";
 
 const dataContextMenu = [
     {
-        label: 'Add to Your Library'
+        label: 'Add to Your Library',
     },
     {
         label: 'Share',
         subMenuItems: [
             {
-                label: 'Copy link to playlist'
+                label: 'Copy link to playlist',
             },
             {
                 label: 'Embed playlist'
