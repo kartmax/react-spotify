@@ -7,12 +7,28 @@ function PlayListContextMenu({ dataContextMenu, isSubMenu, menuPositionClasses }
         ? `absolute bg-[#282828] text-[#eaeaea] text-sm p-1 rounded shadow-xl whitespace-nowrap ${menuPositionClasses}`
         : "absolute z-10 bg-[#282828] text-[#eaeaea] text-sm p-1 rounded shadow-xl whitespace-nowrap divide-y divide-[#3e3e3e]";
 
+    let closePreviousSubmenu = null;
+
+    function closePreviousSubmenuIfOpen (closeSubmenu = null) {
+        if(closePreviousSubmenu) closePreviousSubmenu();
+
+        closePreviousSubmenu = closeSubmenu;
+    }
+
     return (
         <ul className={listClasses} ref={ref}>
             {dataContextMenu.map(dataItem =>
                 dataItem.subMenuItems
-                    ? <PlayListContextMenuItemWithSubmenu key={dataItem.label} {...dataItem} />
-                    : <PlayListContextMenuItem key={dataItem.label} {...dataItem} />
+                    ? <PlayListContextMenuItemWithSubmenu 
+                        key={dataItem.label} 
+                        {...dataItem} 
+                        onMouseEnter = {closePreviousSubmenuIfOpen}
+                    />
+                    : <PlayListContextMenuItem 
+                        key={dataItem.label} 
+                        {...dataItem} 
+                        onMouseEnter = {closePreviousSubmenuIfOpen}
+                    />
             )}
         </ul>
     )

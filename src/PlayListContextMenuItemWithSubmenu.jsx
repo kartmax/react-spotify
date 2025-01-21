@@ -2,7 +2,7 @@ import { ChevronRightIcon } from "@heroicons/react/24/outline";
 import PlayListContextMenu from "./PlayListContextMenu";
 import { useEffect, useRef, useState } from "react";
 
-function PlayListContextMenuItemWithSubmenu({label, subMenuItems}) {
+function PlayListContextMenuItemWithSubmenu({ label, subMenuItems, onMouseEnter: closePreviousSubmenuIfOpen }) {
     const [contextMenu, setContextMenu] = useState({
         isOpen: false,
         classesPosition: ''
@@ -12,6 +12,8 @@ function PlayListContextMenuItemWithSubmenu({label, subMenuItems}) {
     let closeMenuTimer = null;
 
     const openMenu = () => {
+        closePreviousSubmenuIfOpen(startCloseMenuTimer);
+
         if(closeMenuTimer) {
             stopCloseMenuTimer();
             return;
@@ -65,7 +67,11 @@ function PlayListContextMenuItemWithSubmenu({label, subMenuItems}) {
     const classesButton = "w-full p-3 text-left hover:text-white hover:bg-[#3e3e3e] cursor-default flex justify-between items-center gap-3";
 
     return (
-        <li className='relative' ref={menuItemRef} onMouseEnter={openMenu} onMouseLeave={startCloseMenuTimer}>
+        <li 
+            className='relative' 
+            ref={menuItemRef} 
+            onMouseEnter={openMenu} 
+        >
             <button className={classesButton}>
                 {label}
                 <ChevronRightIcon className="size-5" />
