@@ -36,7 +36,15 @@ const dataContextMenu = [
         label: 'About recommendations'
     },
     {
-        label: 'Open in Desktop App'
+        label: 'Open in Desktop App',
+        subMenuItems: [
+            {
+                label: 'trest'
+            },
+            {
+                label: 'sdfsdf'
+            },
+        ]
     },
 ];
 

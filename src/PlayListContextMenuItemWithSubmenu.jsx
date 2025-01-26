@@ -8,16 +8,11 @@ function PlayListContextMenuItemWithSubmenu({ label, subMenuItems, onMouseEnter:
         classesPosition: ''
     });
     const menuItemRef = useRef(null);
-
-    let closeMenuTimer = null;
+    
+    const closeMenuTimer = useRef(null);
 
     const openMenu = () => {
         closePreviousSubmenuIfOpen(startCloseMenuTimer);
-
-        if(closeMenuTimer) {
-            stopCloseMenuTimer();
-            return;
-        }
 
         setContextMenu({
             isOpen: true,
@@ -31,7 +26,7 @@ function PlayListContextMenuItemWithSubmenu({ label, subMenuItems, onMouseEnter:
     });
 
     function startCloseMenuTimer() {
-        closeMenuTimer = setTimeout(() => {
+        closeMenuTimer.current = setTimeout(() => {
             closeMenu();
         }, 100);
     }
@@ -39,7 +34,7 @@ function PlayListContextMenuItemWithSubmenu({ label, subMenuItems, onMouseEnter:
     useEffect(() => stopCloseMenuTimer);
 
     function stopCloseMenuTimer () {
-        clearTimeout(closeMenuTimer);
+        clearTimeout(closeMenuTimer.current);
     }
 
     function getXPositionClassContextMenu () {
