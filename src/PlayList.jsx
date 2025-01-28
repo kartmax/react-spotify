@@ -14,18 +14,24 @@ const dataContextMenu = [
         subMenuItems: [
             {
                 label: 'Copy link to playlist',
+                altLabel: 'Copy Spotify URI',
+                classes: 'min-w-[165px]'
             },
             {
                 label: 'Embed playlist'
             },
             {
-                label: 'Copy link to playlist 1'
+                label: 'Copy link to playlist 1',
+                altLabel: 'Copy Spotify URI',
+                classes: 'min-w-[165px]'
             },
             {
                 label: 'Embed playlist 1'
             },
             {
-                label: 'Copy link to playlist 2'
+                label: 'Copy link to playlist 2',
+                altLabel: 'Copy Spotify URI',
+                classes: 'min-w-[165px]'
             },
             {
                 label: 'Embed playlist 2'
@@ -36,15 +42,7 @@ const dataContextMenu = [
         label: 'About recommendations'
     },
     {
-        label: 'Open in Desktop App',
-        subMenuItems: [
-            {
-                label: 'trest'
-            },
-            {
-                label: 'sdfsdf'
-            },
-        ]
+        label: 'Open in Desktop App'
     },
 ];
 
