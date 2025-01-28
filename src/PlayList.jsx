@@ -5,50 +5,50 @@ import PlayListCover from "./PlayListCover";
 import PlayListDescription from "./PlayListDescription";
 import PlayListTitle from "./PlayListTitle";
 
-const dataContextMenu = [
-    {
-        label: 'Add to Your Library',
-    },
-    {
-        label: 'Share',
-        subMenuItems: [
-            {
-                label: 'Copy link to playlist',
-                altLabel: 'Copy Spotify URI',
-                classes: 'min-w-[165px]'
-            },
-            {
-                label: 'Embed playlist'
-            },
-            {
-                label: 'Copy link to playlist 1',
-                altLabel: 'Copy Spotify URI',
-                classes: 'min-w-[165px]'
-            },
-            {
-                label: 'Embed playlist 1'
-            },
-            {
-                label: 'Copy link to playlist 2',
-                altLabel: 'Copy Spotify URI',
-                classes: 'min-w-[165px]'
-            },
-            {
-                label: 'Embed playlist 2'
-            }
-        ]
-    },
-    {
-        label: 'About recommendations'
-    },
-    {
-        label: 'Open in Desktop App'
-    },
-];
+function generationContextMenuItems (isAltLabel = false) {
+    return [
+        {
+            label: 'Add to Your Library',
+        },
+        {
+            label: 'Share',
+            subMenuItems: [
+                {
+                    label: isAltLabel ? 'Copy Spotify URI' : 'Copy link to playlist',
+                    classes: 'min-w-[165px]'
+                },
+                {
+                    label: 'Embed playlist'
+                },
+                {
+                    label: 'Copy link to playlist 1',
+                    classes: 'min-w-[165px]'
+                },
+                {
+                    label: 'Embed playlist 1'
+                },
+                {
+                    label: 'Copy link to playlist 2',
+                    classes: 'min-w-[165px]'
+                },
+                {
+                    label: 'Embed playlist 2'
+                }
+            ]
+        },
+        {
+            label: 'About recommendations'
+        },
+        {
+            label: 'Open in Desktop App'
+        },
+    ];
+}
 
 const clickPosition = {};
 
 function PlayList({ classesHiddenVisible, cover, title, description, toggleEnableScrolling }) {
+    const [contextMenuItems, setContextMenuItems] = useState(generationContextMenuItems());
     const [isOpenContextMenu, setIsOpenContextMenu] = useState(false);
     const [positionContextMenu, setPositionContextMenu] = useState({x: null, y: null});
 
@@ -98,7 +98,25 @@ function PlayList({ classesHiddenVisible, cover, title, description, toggleEnabl
             document.removeEventListener('mousedown', handlerCloseContextMenu);
             document.removeEventListener('keydown', handlerEsc);
         }
-    })
+    });
+
+    useEffect(() => {
+        function handelAltKeyDown ({ key }) {
+            if(key === 'Alt' && isOpenContextMenu) setContextMenuItems(generationContextMenuItems(true));
+        }
+    
+        function handelAltKeyUp ({ key }) {
+            if(key === 'Alt' && isOpenContextMenu) setContextMenuItems(generationContextMenuItems());
+        }
+    
+        document.addEventListener('keydown', handelAltKeyDown);
+        document.addEventListener('keyup', handelAltKeyUp);
+
+        return () => {
+            document.removeEventListener('keydown', handelAltKeyDown);
+            document.removeEventListener('keyup', handelAltKeyUp);
+        }
+    });
 
     const openContextMenu = (event) => {
         event.preventDefault();
@@ -138,7 +156,7 @@ function PlayList({ classesHiddenVisible, cover, title, description, toggleEnabl
             {isOpenContextMenu && 
                 <PlayListContextMenu 
                     ref={contextMenuRef}
-                    dataContextMenu={dataContextMenu}
+                    dataContextMenu={contextMenuItems}
                 />
             }
         </a>
