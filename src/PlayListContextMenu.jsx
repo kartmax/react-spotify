@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import PlayListContextMenuItem from "./PlayListContextMenuItem";
 import PlayListContextMenuItemWithSubmenu from "./PlayListContextMenuItemWithSubmenu";
 
@@ -7,12 +7,12 @@ function PlayListContextMenu({ dataContextMenu, isSubMenu, menuPositionClasses }
         ? `absolute bg-[#282828] text-[#eaeaea] text-sm p-1 rounded shadow-xl whitespace-nowrap ${menuPositionClasses}`
         : "absolute z-10 bg-[#282828] text-[#eaeaea] text-sm p-1 rounded shadow-xl whitespace-nowrap divide-y divide-[#3e3e3e]";
 
-    let closePreviousSubmenu = null;
+    let closePreviousSubmenu = useRef(null);
 
     function closePreviousSubmenuIfOpen (closeSubmenu = null) {
-        if(closePreviousSubmenu) closePreviousSubmenu();
+        if(closePreviousSubmenu.current) closePreviousSubmenu.current();
 
-        closePreviousSubmenu = closeSubmenu;
+        closePreviousSubmenu.current = closeSubmenu;
     }
 
     return (
