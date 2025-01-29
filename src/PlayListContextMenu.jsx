@@ -11,7 +11,6 @@ function PlayListContextMenu({ dataContextMenu, isSubMenu, menuPositionClasses }
 
     function closePreviousSubmenuIfOpen (closeSubmenu = null) {
         if(closePreviousSubmenu.current) closePreviousSubmenu.current();
-
         closePreviousSubmenu.current = closeSubmenu;
     }
 
