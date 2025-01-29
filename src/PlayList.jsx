@@ -88,8 +88,8 @@ function PlayList({ classesHiddenVisible, cover, title, description, toggleEnabl
     useEffect(() => {
         if (!isOpenContextMenu) return;
 
-        const handlerCloseContextMenu = (event) => !contextMenuRef.current.contains(event.target) && closeContextMenu();
-        const handlerEsc = (event) => event.keyCode === 27 && closeContextMenu();
+        const handlerCloseContextMenu = ({ target }) => !contextMenuRef.current.contains(target) && closeContextMenu();
+        const handlerEsc = ({ key }) => key === 'Escape' && closeContextMenu();
 
         document.addEventListener('mousedown', handlerCloseContextMenu);
         document.addEventListener('keydown', handlerEsc);

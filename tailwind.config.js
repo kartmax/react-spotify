@@ -4,6 +4,7 @@ module.exports = {
         "./public/**/*.html",
         "./src/**/*.{js,jsx,ts,tsx}",
     ],
+    
     theme: {
         screens: {
             'sm': '500px',
@@ -15,7 +16,14 @@ module.exports = {
             '4xl': '2000px',
             '5xl': '2200px'
         },
+
+        extend: {
+            boxShadow : {
+                "3xl" : "0 16px 24px rgba(0, 0, 0, .3), 0 6px 8px rgba(0, 0, 0, .2)",
+            } 
+        },
     },
+
     plugins: [],
 }
 

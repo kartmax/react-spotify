@@ -11,6 +11,8 @@ function PlayListContextMenuItemWithSubmenu({ label, subMenuItems, onMouseEnter:
     
     const closeMenuTimer = useRef(null);
 
+    const bgClass = contextMenu.isOpen ? 'bg-[#3e3e3e]' : 'hover:bg-[#3e3e3e]';
+
     const openMenu = () => {
         closePreviousSubmenuIfOpen(startCloseMenuTimer);
 
@@ -59,7 +61,7 @@ function PlayListContextMenuItemWithSubmenu({ label, subMenuItems, onMouseEnter:
         return `${getXPositionClassContextMenu()} ${getYPositionClassContextMenu()}`;
     }
 
-    const classesButton = "w-full p-3 text-left hover:text-white hover:bg-[#3e3e3e] cursor-default flex justify-between items-center gap-3";
+    const classesButton = `w-full p-3 text-left hover:text-white cursor-default flex justify-between items-center gap-3 ${bgClass}`;
 
     return (
         <li 

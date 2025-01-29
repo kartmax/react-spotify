@@ -3,9 +3,7 @@ import PlayListContextMenuItem from "./PlayListContextMenuItem";
 import PlayListContextMenuItemWithSubmenu from "./PlayListContextMenuItemWithSubmenu";
 
 function PlayListContextMenu({ dataContextMenu, isSubMenu, menuPositionClasses }, ref) {
-    const listClasses = isSubMenu
-        ? `absolute bg-[#282828] text-[#eaeaea] text-sm p-1 rounded shadow-xl whitespace-nowrap ${menuPositionClasses}`
-        : "absolute z-10 bg-[#282828] text-[#eaeaea] text-sm p-1 rounded shadow-xl whitespace-nowrap divide-y divide-[#3e3e3e]";
+    const listClasses = isSubMenu ? menuPositionClasses : "z-10 divide-y divide-[#3e3e3e]";
 
     let closePreviousSubmenu = useRef(null);
 
@@ -15,7 +13,7 @@ function PlayListContextMenu({ dataContextMenu, isSubMenu, menuPositionClasses }
     }
 
     return (
-        <ul className={listClasses} ref={ref}>
+        <ul className={`absolute bg-[#282828] text-[#eaeaea] text-sm p-1 rounded shadow-3xl whitespace-nowrap ${listClasses}`} ref={ref}>
             {dataContextMenu.map(dataItem =>
                 dataItem.subMenuItems
                     ? <PlayListContextMenuItemWithSubmenu 
