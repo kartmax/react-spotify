@@ -1,3 +1,4 @@
+import { useEffect, useLayoutEffect, useState } from "react";
 import useContextMenu from "./hooks/useContextMenu";
 import PlayListButtonPlay from "./PlayListButtonPlay";
 import PlayListContextMenu from "./PlayListContextMenu";
@@ -5,22 +6,87 @@ import PlayListCover from "./PlayListCover";
 import PlayListDescription from "./PlayListDescription";
 import PlayListTitle from "./PlayListTitle";
 
+function generationContextMenuItems (isAltLabel = false) {
+    return [
+        {
+            label: 'Add to Your Library',
+        },
+        {
+            label: 'Share',
+            subMenuItems: [
+                {
+                    label: isAltLabel ? 'Copy Spotify URI' : 'Copy link to playlist',
+                    classes: 'min-w-[165px]'
+                },
+                {
+                    label: 'Embed playlist'
+                },
+                {
+                    label: 'Copy link to playlist 1',
+                    classes: 'min-w-[165px]'
+                },
+                {
+                    label: 'Embed playlist 1'
+                },
+                {
+                    label: 'Copy link to playlist 2',
+                    classes: 'min-w-[165px]'
+                },
+                {
+                    label: 'Embed playlist 2'
+                }
+            ]
+        },
+        {
+            label: 'About recommendations'
+        },
+        {
+            label: 'Open in Desktop App'
+        },
+    ];
+}
+
 function PlayList({ classesHiddenVisible, cover, title, description, toggleEnableScrolling }) {
+    const [contextMenuItems, setContextMenuItems] = useState(generationContextMenuItems());
 
     const {
         playListRef,
-        bgClasses,
-        openContextMenu,
-        isOpenContextMenu,
-        contextMenuRef,
-        contextMenuItems 
-    } = useContextMenu(toggleEnableScrolling);
+        openContextMenu: openMenu,
+        isOpenContextMenu: isOpenMenu,
+        contextMenuRef: menuRef
+    } = useContextMenu();
+
+    useEffect(() => {
+        if (!isOpenMenu) return;
+
+        function handelAltKeyDown ({ key }) {
+            if(key === 'Alt') setContextMenuItems(generationContextMenuItems(true));
+        }
+    
+        function handelAltKeyUp ({ key }) {
+            if(key === 'Alt') setContextMenuItems(generationContextMenuItems());
+        }
+    
+        document.addEventListener('keydown', handelAltKeyDown);
+        document.addEventListener('keyup', handelAltKeyUp);
+
+        return () => {
+            document.removeEventListener('keydown', handelAltKeyDown);
+            document.removeEventListener('keyup', handelAltKeyUp);
+        }
+    });
+
+    useLayoutEffect( () => toggleEnableScrolling(!isOpenMenu) );
+
+    const bgClasses = isOpenMenu
+        ? 'bg-[#272727]'
+        : 'bg-[#181818]';
 
     return (
         <a href="/"
             ref={playListRef}
             className={`relative cursor-default p-4 rounded-md hover:bg-[#272727] duration-200 group ${classesHiddenVisible} ${bgClasses}`}
-            onContextMenu={openContextMenu}
+            onContextMenu={openMenu}
             onClick={(event) => event.preventDefault()}
         >
             <div className="relative">
@@ -31,9 +97,9 @@ function PlayList({ classesHiddenVisible, cover, title, description, toggleEnabl
             <PlayListTitle title={title} />
             <PlayListDescription description={description} />
 
-            {isOpenContextMenu &&
+            {isOpenMenu &&
                 <PlayListContextMenu
-                    ref={contextMenuRef}
+                    ref={menuRef}
                     dataContextMenu={contextMenuItems}
                 />
             }
