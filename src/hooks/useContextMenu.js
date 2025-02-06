@@ -1,6 +1,5 @@
-import { useLayoutEffect, useEffect, useRef, useState } from "react";
-
-const clickPosition = {};
+import { useEffect, useRef, useState } from "react";
+import useContextMenuPosition from "./useContextMenuPosition";
 
 function useContextMenu () {
     const [isOpenContextMenu, setIsOpenContextMenu] = useState(false);
@@ -9,32 +8,7 @@ function useContextMenu () {
     const playListRef = useRef(null);
     const contextMenuRef = useRef(null);
 
-    function updateHorizontalPositionContextMenu () {
-        const menuWidth = contextMenuRef.current.offsetWidth;
-        const shouldMoveLeft = menuWidth > window.innerWidth - clickPosition.x;
-
-        contextMenuRef.current.style.left = shouldMoveLeft
-            ? `${positionContextMenu.x - menuWidth}px`
-            : `${positionContextMenu.x}px`;
-    }
-
-    function updateVerticalPositionContextMenu () {
-        const menuHeight = contextMenuRef.current.offsetHeight;
-        const shouldMoveTop = menuHeight > window.innerHeight - clickPosition.y;
-
-        contextMenuRef.current.style.top = shouldMoveTop
-            ? `${positionContextMenu.y - menuHeight}px`
-            : `${positionContextMenu.y}px`;
-    }
-
-    function updateCoordinateContextMenu () {
-        if(isOpenContextMenu) {
-            updateHorizontalPositionContextMenu();
-            updateVerticalPositionContextMenu();
-        }
-    }
-
-    useLayoutEffect( () => updateCoordinateContextMenu() );
+    const updateClickCoordinate = useContextMenuPosition(contextMenuRef, isOpenContextMenu, positionContextMenu);
 
     useEffect(() => {
         if (!isOpenContextMenu) return;
@@ -55,8 +29,7 @@ function useContextMenu () {
         event.preventDefault();
         setIsOpenContextMenu(true);
 
-        clickPosition.x = event.clientX;
-        clickPosition.y = event.clientY;
+        updateClickCoordinate(event.clientX, event.clientY);
         
         setPositionContextMenu( 
             {
