@@ -5,6 +5,7 @@ import PlayListContextMenu from "./PlayListContextMenu";
 import PlayListCover from "./PlayListCover";
 import PlayListDescription from "./PlayListDescription";
 import PlayListTitle from "./PlayListTitle";
+import BaseToast from "./BaseToast";
 
 function generationContextMenuItems (isAltLabel = false) {
     return [
@@ -15,8 +16,9 @@ function generationContextMenuItems (isAltLabel = false) {
             label: 'Share',
             submenuItems: [
                 {
-                    label: isAltLabel ? 'Copy Spotify URI' : 'Copy link to playlist',
-                    classes: 'min-w-[165px]'
+                    label: isAltLabel ? 'Copy Spotify URI_' : 'Copy link to playlist',
+                    classes: 'min-w-[165px]',
+                    action: () => console.log('action')
                 },
                 {
                     label: 'Embed playlist'
@@ -83,6 +85,7 @@ function PlayList({ classesHiddenVisible, cover, title, description, toggleEnabl
         : 'bg-[#181818]';
 
     return (
+        <>
         <a href="/"
             ref={playListRef}
             className={`relative cursor-default p-4 rounded-md hover:bg-[#272727] duration-200 group ${classesHiddenVisible} ${bgClasses}`}
@@ -104,6 +107,9 @@ function PlayList({ classesHiddenVisible, cover, title, description, toggleEnabl
                 />
             }
         </a>
+
+        <BaseToast />
+        </>
     )
 }
 

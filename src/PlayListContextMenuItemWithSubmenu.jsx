@@ -19,7 +19,9 @@ function PlayListContextMenuItemWithSubmenu({ label, submenuItems, onMouseEnter:
             ref={ref} 
             onMouseEnter={submenu.open} 
         >
-            <button className={classesButton}>
+            <button 
+                className={classesButton}
+            >
                 {label}
                 <ChevronRightIcon className="size-5" />
             </button>

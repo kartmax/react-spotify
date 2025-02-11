@@ -25,6 +25,7 @@ function PlayListContextMenu({ dataContextMenu, isSubMenu, menuPositionClasses }
                         key={dataItem.label} 
                         {...dataItem} 
                         onMouseEnter = {closePreviousSubmenuIfOpen}
+                        onClick={dataItem.action}
                     />
             )}
         </ul>
