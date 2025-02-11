@@ -15,7 +15,7 @@ function PlayListContextMenu({ dataContextMenu, isSubMenu, menuPositionClasses }
     return (
         <ul className={`absolute bg-[#282828] text-[#eaeaea] text-sm p-1 rounded shadow-3xl whitespace-nowrap ${listClasses}`} ref={ref}>
             {dataContextMenu.map(dataItem =>
-                dataItem.subMenuItems
+                dataItem.submenuItems
                     ? <PlayListContextMenuItemWithSubmenu 
                         key={dataItem.label} 
                         {...dataItem} 

@@ -13,7 +13,7 @@ function generationContextMenuItems (isAltLabel = false) {
         },
         {
             label: 'Share',
-            subMenuItems: [
+            submenuItems: [
                 {
                     label: isAltLabel ? 'Copy Spotify URI' : 'Copy link to playlist',
                     classes: 'min-w-[165px]'
