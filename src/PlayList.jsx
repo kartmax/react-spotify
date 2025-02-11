@@ -47,13 +47,13 @@ function generationContextMenuItems (isAltLabel = false) {
 }
 
 function PlayList({ classesHiddenVisible, cover, title, description, toggleEnableScrolling }) {
-    const [contextMenuItems, setContextMenuItems] = useState(generationContextMenuItems());
+    const [contextMenuItems, setContextMenuItems] = useState(generationContextMenuItems);
 
     const {
         playListRef,
-        openContextMenu: openMenu,
-        isOpenContextMenu: isOpenMenu,
-        contextMenuRef: menuRef
+        open: openMenu,
+        isOpen: isOpenMenu,
+        ref: menuRef
     } = useContextMenu();
 
     useEffect(() => {

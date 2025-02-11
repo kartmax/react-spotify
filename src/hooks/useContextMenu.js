@@ -1,50 +1,50 @@
 import { useEffect, useRef, useState } from "react";
 import useContextMenuPosition from "./useContextMenuPosition";
 
-function useContextMenu () {
-    const [isOpenContextMenu, setIsOpenContextMenu] = useState(false);
-    const [positionContextMenu, setPositionContextMenu] = useState({x: null, y: null});
+function useContextMenu() {
+    const [isOpen, setIsOpen] = useState(false);
+    const [position, setPosition] = useState({ x: null, y: null });
 
     const playListRef = useRef(null);
-    const contextMenuRef = useRef(null);
+    const ref = useRef(null);
 
-    const updateClickCoordinate = useContextMenuPosition(contextMenuRef, isOpenContextMenu, positionContextMenu);
+    const updateClickCoordinate = useContextMenuPosition(ref, isOpen, position);
 
     useEffect(() => {
-        if (!isOpenContextMenu) return;
+        if (!isOpen) return;
 
-        const handlerCloseContextMenu = ({ target }) => !contextMenuRef.current.contains(target) && closeContextMenu();
-        const handlerEsc = ({ key }) => key === 'Escape' && closeContextMenu();
+        const handlerClose = ({ target }) => !ref.current.contains(target) && close();
+        const handlerEsc = ({ key }) => key === 'Escape' && close();
 
-        document.addEventListener('mousedown', handlerCloseContextMenu);
+        document.addEventListener('mousedown', handlerClose);
         document.addEventListener('keydown', handlerEsc);
 
         return () => {
-            document.removeEventListener('mousedown', handlerCloseContextMenu);
+            document.removeEventListener('mousedown', handlerClose);
             document.removeEventListener('keydown', handlerEsc);
         }
     });
 
-    const openContextMenu = (event) => {
+    const open = (event) => {
         event.preventDefault();
-        setIsOpenContextMenu(true);
+        setIsOpen(true);
 
         updateClickCoordinate(event.clientX, event.clientY);
-        
-        setPositionContextMenu( 
+
+        setPosition(
             {
-                x: event.clientX - playListRef.current.getBoundingClientRect().left, 
+                x: event.clientX - playListRef.current.getBoundingClientRect().left,
                 y: event.clientY - playListRef.current.getBoundingClientRect().top
             }
         );
     }
-    const closeContextMenu = () => setIsOpenContextMenu(false);
+    const close = () => setIsOpen(false);
 
     return {
         playListRef,
-        openContextMenu,
-        isOpenContextMenu,
-        contextMenuRef
+        open,
+        isOpen,
+        ref
     }
 }
 
