@@ -8,8 +8,8 @@ import BaseToast from "./BaseToast";
 
 function App() {
     const [toastMessage, setToastMessage] = useState();
-    const [isToastShow, setIsToastShow] = useState(false);
     const showTimerToast = useRef();
+    const toastRef = useRef();
 
     const contentWrapperScrollingRef = useRef(null);
     let isEnableScrolling = true;
@@ -32,13 +32,10 @@ function App() {
     })
 
     function showToast(text) {
+        clearTimeout(showTimerToast.current);
         setToastMessage(text);
-        setIsToastShow(true);
-        showTimerToast.current = setTimeout(hideToast, 3000); 
-    }
-
-    function hideToast() {
-        setIsToastShow(false);
+        toastRef.current.show();
+        showTimerToast.current = setTimeout(toastRef.current.hide, 3000); 
     }
 
     return (
@@ -54,7 +51,7 @@ function App() {
             </div>
 
             <Registration />
-            {isToastShow && <BaseToast>{toastMessage}</BaseToast>}
+            <BaseToast ref={toastRef}>{toastMessage}</BaseToast>
         </>
     );
 }
