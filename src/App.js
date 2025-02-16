@@ -5,10 +5,9 @@ import Registration from "./Registration";
 import Sidebar from "./Sidebar";
 import SidebarOverlay from "./SidebarOverlay";
 import BaseToast from "./BaseToast";
+import BasePopover from "./BasePopover";
 
 function App() {
-    const [toastMessage, setToastMessage] = useState();
-    const showTimerToast = useRef();
     const toastRef = useRef();
 
     const contentWrapperScrollingRef = useRef(null);
@@ -31,11 +30,8 @@ function App() {
         return () => contentWrapper.removeEventListener('wheel', handleScrollingWrapper);
     })
 
-    function showToast(text) {
-        clearTimeout(showTimerToast.current);
-        setToastMessage(text);
-        toastRef.current.show();
-        showTimerToast.current = setTimeout(toastRef.current.hide, 3000); 
+    function showToast(message) {
+        toastRef.current.show(message);
     }
 
     return (
@@ -51,7 +47,9 @@ function App() {
             </div>
 
             <Registration />
-            <BaseToast ref={toastRef}>{toastMessage}</BaseToast>
+
+            <BaseToast ref={toastRef} />
+            <BasePopover />
         </>
     );
 }
