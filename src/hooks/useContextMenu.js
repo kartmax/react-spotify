@@ -43,6 +43,7 @@ function useContextMenu() {
     return {
         playListRef,
         open,
+        close,
         isOpen,
         ref
     }

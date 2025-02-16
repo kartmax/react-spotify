@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import useContextMenu from "./hooks/useContextMenu";
 import PlayListButtonPlay from "./PlayListButtonPlay";
 import PlayListContextMenu from "./PlayListContextMenu";
@@ -7,53 +7,61 @@ import PlayListDescription from "./PlayListDescription";
 import PlayListTitle from "./PlayListTitle";
 import BaseToast from "./BaseToast";
 
-function generationContextMenuItems (isAltLabel = false) {
-    return [
-        {
-            label: 'Add to Your Library',
-        },
-        {
-            label: 'Share',
-            submenuItems: [
-                {
-                    label: isAltLabel ? 'Copy Spotify URI_' : 'Copy link to playlist',
-                    classes: 'min-w-[165px]',
-                    action: () => console.log('action')
-                },
-                {
-                    label: 'Embed playlist'
-                },
-                {
-                    label: 'Copy link to playlist 1',
-                    classes: 'min-w-[165px]'
-                },
-                {
-                    label: 'Embed playlist 1'
-                },
-                {
-                    label: 'Copy link to playlist 2',
-                    classes: 'min-w-[165px]'
-                },
-                {
-                    label: 'Embed playlist 2'
-                }
-            ]
-        },
-        {
-            label: 'About recommendations'
-        },
-        {
-            label: 'Open in Desktop App'
-        },
-    ];
-}
-
 function PlayList({ classesHiddenVisible, cover, title, description, toggleEnableScrolling }) {
+    const [isToastShow, setIsToastShow] = useState(false);
     const [contextMenuItems, setContextMenuItems] = useState(generationContextMenuItems);
+    const showTimerToast = useRef();
+
+    function generationContextMenuItems (isAltLabel = false) {
+        return [
+            {
+                label: 'Add to Your Library',
+            },
+            {
+                label: 'Share',
+                submenuItems: [
+                    {
+                        label: isAltLabel ? 'Copy Spotify URI' : 'Copy link to playlist',
+                        classes: 'min-w-[165px]',
+                        action: () => {
+                            navigator.clipboard.writeText(title).then(() => {
+                                closeMenu();
+                                showToast();
+                            });
+                        } 
+                    },
+                    {
+                        label: 'Embed playlist'
+                    },
+                    {
+                        label: 'Copy link to playlist 1',
+                        classes: 'min-w-[165px]'
+                    },
+                    {
+                        label: 'Embed playlist 1'
+                    },
+                    {
+                        label: 'Copy link to playlist 2',
+                        classes: 'min-w-[165px]'
+                    },
+                    {
+                        label: 'Embed playlist 2'
+                    }
+                ]
+            },
+            {
+                label: 'About recommendations'
+            },
+            {
+                label: 'Open in Desktop App'
+            },
+        ];
+    }
 
     const {
         playListRef,
         open: openMenu,
+        close: closeMenu,
         isOpen: isOpenMenu,
         ref: menuRef
     } = useContextMenu();
@@ -84,6 +92,15 @@ function PlayList({ classesHiddenVisible, cover, title, description, toggleEnabl
         ? 'bg-[#272727]'
         : 'bg-[#181818]';
 
+    function showToast() {
+        setIsToastShow(true);
+        showTimerToast.current = setTimeout(hideToast, 3000); 
+    }
+
+    function hideToast() {
+        setIsToastShow(false);
+    }
+
     return (
         <>
         <a href="/"
@@ -107,8 +124,7 @@ function PlayList({ classesHiddenVisible, cover, title, description, toggleEnabl
                 />
             }
         </a>
-
-        <BaseToast />
+        {isToastShow && <BaseToast>Link copied to clipboard</BaseToast>}
         </>
     )
 }
