@@ -1,6 +1,5 @@
 import { Bars3Icon, ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
-import ButtonSignUp from "./ButtonSignUp";
-import ButtonLogin from "./ButtonLogin";
+import BaseButton from "./BaseButton";
 
 function Header() {
     return (
@@ -17,8 +16,8 @@ function Header() {
                 </a>
             </div>
             <div className="flex items-center gap-2 sm:gap-6">
-                <ButtonSignUp />
-                <ButtonLogin />
+                <BaseButton clasess='text-gray-400'>Sign Up</BaseButton>
+                <BaseButton primary={true}>Login</BaseButton>
             </div>
         </header>
     )
