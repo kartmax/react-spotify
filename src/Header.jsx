@@ -16,7 +16,7 @@ function Header() {
                 </a>
             </div>
             <div className="flex items-center gap-2 sm:gap-6">
-                <BaseButton clasess='text-gray-400'>Sign Up</BaseButton>
+                <BaseButton classes='text-gray-400'>Sign Up</BaseButton>
                 <BaseButton primary={true}>Login</BaseButton>
             </div>
         </header>
