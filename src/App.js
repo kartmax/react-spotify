@@ -1,11 +1,15 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Header from "./Header";
 import Main from "./Main";
 import Registration from "./Registration";
 import Sidebar from "./Sidebar";
 import SidebarOverlay from "./SidebarOverlay";
+import BaseToast from "./BaseToast";
 
 function App() {
+    const [toastMessage, setToastMessage] = useState();
+    const [isToastShow, setIsToastShow] = useState(false);
+    const showTimerToast = useRef();
 
     const contentWrapperScrollingRef = useRef(null);
     let isEnableScrolling = true;
@@ -27,6 +31,15 @@ function App() {
         return () => contentWrapper.removeEventListener('wheel', handleScrollingWrapper);
     })
 
+    function showToast(text) {
+        setToastMessage(text);
+        setIsToastShow(true);
+        showTimerToast.current = setTimeout(hideToast, 3000); 
+    }
+
+    function hideToast() {
+        setIsToastShow(false);
+    }
 
     return (
         <>
@@ -36,11 +49,12 @@ function App() {
 
                 <div className="flex-1 overflow-auto" ref={contentWrapperScrollingRef}>
                     <Header />
-                    <Main toggleEnableScrolling={toggleEnableScrolling} />
+                    <Main showToast={showToast} toggleEnableScrolling={toggleEnableScrolling} />
                 </div>
             </div>
 
             <Registration />
+            {isToastShow && <BaseToast>{toastMessage}</BaseToast>}
         </>
     );
 }

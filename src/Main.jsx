@@ -57,7 +57,7 @@ const playlists = [
     }
 ];
 
-function Main({ toggleEnableScrolling }) {
+function Main({ showToast, toggleEnableScrolling }) {
     return (
         <main className="text-white relative overflow-x-hidden">
             <div className="h-[275px] bg-gradient-to-b from-[#1f1f1f] to-[#121212] absolute w-full"></div>
@@ -71,7 +71,7 @@ function Main({ toggleEnableScrolling }) {
                     </div>
 
                     <div className="flex gap-5 max-w-screen-5xl grid-playlists">
-                        {playlists.slice(0,9).map(playlist => <PlayList key={playlist.title} {...playlist} toggleEnableScrolling={toggleEnableScrolling} />)}
+                        {playlists.slice(0,9).map(playlist => <PlayList key={playlist.title} {...playlist} showToast={showToast} toggleEnableScrolling={toggleEnableScrolling} />)}
                     </div>
                 </div>
 
@@ -85,7 +85,7 @@ function Main({ toggleEnableScrolling }) {
                     </div>
 
                     <div className="flex gap-5 max-w-screen-5xl grid-playlists">
-                        {playlists.slice(0,9).map(playlist => <PlayList key={playlist.title} {...playlist} toggleEnableScrolling={toggleEnableScrolling} />)}
+                        {playlists.slice(0,9).map(playlist => <PlayList key={playlist.title} {...playlist} showToast={showToast} toggleEnableScrolling={toggleEnableScrolling} />)}
                     </div>
                 </div>
 
@@ -99,7 +99,7 @@ function Main({ toggleEnableScrolling }) {
                     </div>
 
                     <div className="flex gap-5 max-w-screen-5xl grid-playlists">
-                        {playlists.slice(0,9).map(playlist => <PlayList key={playlist.title} {...playlist} toggleEnableScrolling={toggleEnableScrolling} />)}
+                        {playlists.slice(0,9).map(playlist => <PlayList key={playlist.title} {...playlist} showToast={showToast} toggleEnableScrolling={toggleEnableScrolling} />)}
                     </div>
                 </div>
 
