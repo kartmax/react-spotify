@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import Header from "./Header";
 import Main from "./Main";
 import Registration from "./Registration";
@@ -8,6 +8,7 @@ import BaseToast from "./BaseToast";
 import BasePopover from "./BasePopover";
 
 function App() {
+    const popoverRef = useRef();
     const toastRef = useRef();
 
     const contentWrapperScrollingRef = useRef(null);
@@ -34,10 +35,14 @@ function App() {
         toastRef.current.show(message);
     }
 
+    function showPopover() {
+        popoverRef.current.show();
+    }
+
     return (
         <>
             <div className="flex flex-grow overflow-auto">
-                <Sidebar />
+                <Sidebar showPopover={showPopover} />
                 <SidebarOverlay />
 
                 <div className="flex-1 overflow-auto" ref={contentWrapperScrollingRef}>
@@ -49,7 +54,7 @@ function App() {
             <Registration />
 
             <BaseToast ref={toastRef} />
-            <BasePopover />
+            <BasePopover ref={popoverRef} />
         </>
     );
 }

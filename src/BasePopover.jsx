@@ -1,17 +1,17 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
 import BaseButton from "./BaseButton";
 
-function BasePopover () {
-    const [classes, setClasses] = useState();
-    const ref = useRef();
+function BasePopover (_, ref) {
+    const [classes, setClasses] = useState('opacity-0 pointer-events-none');
+    const nodeRef = useRef();
 
-    function hide () {
-        setClasses('opacity-0 pointer-events-none')
-    }
+    useImperativeHandle(ref, () => ({
+        show
+    }));
 
     useEffect(() => {
         function handleClickAway({ target }) {
-            if(!ref.current.contains(target)) hide();
+            if(!nodeRef.current.contains(target)) hide();
         }
 
         document.addEventListener('mousedown', handleClickAway);
@@ -19,10 +19,18 @@ function BasePopover () {
         return () => {
             document.removeEventListener('mousedown', handleClickAway);
         }
-    })
+    });
+
+    function show () {
+        setClasses('opacity-1 pointer-events-auto');
+    }
+
+    function hide () {
+        setClasses('opacity-0 pointer-events-none');
+    }
 
     return (
-        <div ref={ref} className={`fixed top-[227px] left-[200px] z-40 bg-[#0e72ea] text-white tracking-wide rounded-lg shadow-3xl p-4 min-w-[330px] select-none transition duration-400 ${classes}`}>
+        <div ref={nodeRef} className={`fixed top-[227px] left-[200px] z-40 bg-[#0e72ea] text-white tracking-wide rounded-lg shadow-3xl p-4 min-w-[330px] select-none transition duration-400 ${classes}`}>
             <h3 className="text-lg font-bold mb-2">Create a playlist</h3>
             <p className="text-xs">Log in to create and share playlist.</p>
 
@@ -31,11 +39,11 @@ function BasePopover () {
                 <BaseButton primary>Login</BaseButton>
             </div>
 
-            <div className="absolute w-20 h-20 -left-20 -top-4 flex justify-end items-center overflow-hidden pointer-events-none">
+            <div className="absolute w-20 h-20 -left-20 bottom-5 flex justify-end items-center overflow-hidden pointer-events-none">
                 <div className="w-3 h-3 bg-[#0e72ea] shadow-3xl rotate-45 translate-x-1/2 pointer-events-auto"></div>
             </div>
         </div>
     ) 
 }
 
-export default BasePopover;
+export default React.forwardRef(BasePopover);
