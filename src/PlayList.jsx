@@ -6,7 +6,7 @@ import PlayListCover from "./PlayListCover";
 import PlayListDescription from "./PlayListDescription";
 import PlayListTitle from "./PlayListTitle";
 
-function PlayList({ showToast, classesHiddenVisible, cover, title, description, toggleEnableScrolling }) {
+function PlayList({ showToast, showPopover, classesHiddenVisible, cover, title, description, toggleEnableScrolling }) {
     const [contextMenuItems, setContextMenuItems] = useState(generationContextMenuItems);
 
     function copied (textSuccess) {
@@ -16,10 +16,16 @@ function PlayList({ showToast, classesHiddenVisible, cover, title, description, 
         });
     }
 
+    function openPopover () {
+        closeMenu();
+        showPopover();
+    }
+
     function generationContextMenuItems (isAltLabel = false) {
         return [
             {
                 label: 'Add to Your Library',
+                action: openPopover
             },
             {
                 label: 'Share',

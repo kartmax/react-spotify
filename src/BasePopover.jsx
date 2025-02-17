@@ -2,7 +2,7 @@ import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
 import BaseButton from "./BaseButton";
 
 function BasePopover (_, ref) {
-    const [classes, setClasses] = useState('opacity-0 pointer-events-none');
+    const [classes, setClasses] = useState('opacity-0 translate-x-2 pointer-events-none');
     const nodeRef = useRef();
 
     useImperativeHandle(ref, () => ({
@@ -22,15 +22,15 @@ function BasePopover (_, ref) {
     });
 
     function show () {
-        setClasses('opacity-1 pointer-events-auto');
+        setClasses('opacity-1');
     }
 
     function hide () {
-        setClasses('opacity-0 pointer-events-none');
+        setClasses('opacity-0 translate-x-2 pointer-events-none');
     }
 
     return (
-        <div ref={nodeRef} className={`fixed top-[227px] left-[200px] z-40 bg-[#0e72ea] text-white tracking-wide rounded-lg shadow-3xl p-4 min-w-[330px] select-none transition duration-400 ${classes}`}>
+        <div ref={nodeRef} className={`fixed top-[227px] left-[200px] z-40 bg-[#0e72ea] text-white tracking-wide rounded-lg shadow-3xl p-4 min-w-[330px] select-none transition duration-400s ${classes}`}>
             <h3 className="text-lg font-bold mb-2">Create a playlist</h3>
             <p className="text-xs">Log in to create and share playlist.</p>
 

@@ -57,7 +57,7 @@ const playlists = [
     }
 ];
 
-function Main({ showToast, toggleEnableScrolling }) {
+function Main({ showToast, showPopover, toggleEnableScrolling }) {
     return (
         <main className="text-white relative overflow-x-hidden">
             <div className="h-[275px] bg-gradient-to-b from-[#1f1f1f] to-[#121212] absolute w-full"></div>
@@ -71,7 +71,13 @@ function Main({ showToast, toggleEnableScrolling }) {
                     </div>
 
                     <div className="flex gap-5 max-w-screen-5xl grid-playlists">
-                        {playlists.slice(0,9).map(playlist => <PlayList key={playlist.title} {...playlist} showToast={showToast} toggleEnableScrolling={toggleEnableScrolling} />)}
+                        {playlists.slice(0,9).map(playlist => <PlayList 
+                            key={playlist.title} 
+                            showToast={showToast} 
+                            showPopover={showPopover}
+                            toggleEnableScrolling={toggleEnableScrolling} 
+                            {...playlist} 
+                        />)}
                     </div>
                 </div>
 
@@ -85,7 +91,13 @@ function Main({ showToast, toggleEnableScrolling }) {
                     </div>
 
                     <div className="flex gap-5 max-w-screen-5xl grid-playlists">
-                        {playlists.slice(0,9).map(playlist => <PlayList key={playlist.title} {...playlist} showToast={showToast} toggleEnableScrolling={toggleEnableScrolling} />)}
+                        {playlists.slice(0,9).map(playlist => <PlayList 
+                            key={playlist.title} 
+                            showToast={showToast} 
+                            showPopover={showPopover} 
+                            toggleEnableScrolling={toggleEnableScrolling} 
+                            {...playlist} 
+                        />)}
                     </div>
                 </div>
 
@@ -99,7 +111,13 @@ function Main({ showToast, toggleEnableScrolling }) {
                     </div>
 
                     <div className="flex gap-5 max-w-screen-5xl grid-playlists">
-                        {playlists.slice(0,9).map(playlist => <PlayList key={playlist.title} {...playlist} showToast={showToast} toggleEnableScrolling={toggleEnableScrolling} />)}
+                        {playlists.slice(0,9).map(playlist => <PlayList 
+                            key={playlist.title} 
+                            showToast={showToast} 
+                            showPopover={showPopover}
+                            toggleEnableScrolling={toggleEnableScrolling} 
+                            {...playlist} 
+                        />)}
                     </div>
                 </div>
 

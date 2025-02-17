@@ -47,7 +47,7 @@ function App() {
 
                 <div className="flex-1 overflow-auto" ref={contentWrapperScrollingRef}>
                     <Header />
-                    <Main showToast={showToast} toggleEnableScrolling={toggleEnableScrolling} />
+                    <Main showToast={showToast} showPopover={showPopover} toggleEnableScrolling={toggleEnableScrolling} />
                 </div>
             </div>
 
