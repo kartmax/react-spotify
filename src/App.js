@@ -11,25 +11,25 @@ function App() {
     const popoverRef = useRef();
     const toastRef = useRef();
 
-    const contentWrapperScrollingRef = useRef(null);
+    const contentWrapperScrollingRef = useRef();
     let isEnableScrolling = true;
-
-    function toggleEnableScrolling (isEnable) {
-        isEnableScrolling = isEnable;
-    }
-
-    function handleScrollingWrapper (event) {
-        if(isEnableScrolling) return;
-
-        event.preventDefault();
-        event.stopPropagation();
-    }
 
     useEffect(() => {
         const contentWrapper = contentWrapperScrollingRef.current;
         contentWrapper.addEventListener('wheel', handleScrollingWrapper);
         return () => contentWrapper.removeEventListener('wheel', handleScrollingWrapper);
     })
+
+    function toggleEnableScrolling(isEnable) {
+        isEnableScrolling = isEnable;
+    }
+
+    function handleScrollingWrapper(event) {
+        if (isEnableScrolling) return;
+
+        event.preventDefault();
+        event.stopPropagation();
+    }
 
     function showToast(message) {
         toastRef.current.show(message);
