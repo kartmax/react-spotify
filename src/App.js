@@ -35,8 +35,8 @@ function App() {
         toastRef.current.show(message);
     }
 
-    function showPopover() {
-        popoverRef.current.show();
+    function showPopover(title, description) {
+        popoverRef.current.show(title, description);
     }
 
     return (

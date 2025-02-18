@@ -19,18 +19,29 @@ function SidebarNav({ showPopover }) {
         {
             classes: notActiveClassesNav + ' mb-6',
             icon: <QueueListIcon className="size-6" />,
-            label: 'Your Library'
+            label: 'Your Library',
+            action: () => showPopover (
+                'Enjoy Your Library',
+                'Log in to create and share playlist.'
+            )
         },
         {
             classes: notActiveClassesNav,
             icon: <PlusCircleIcon className="size-6" />,
             label: 'Create Playlist',
-            action: showPopover
+            action: () => showPopover (
+                'Create a playlist',
+                'Log in to create and share playlist.'
+            )
         },
         {
             classes: notActiveClassesNav,
             icon: <HeartIcon className="size-6" />,
-            label: 'Liked Songs'
+            label: 'Liked Songs',
+            action: () => showPopover (
+                'Enjoy your Liked Songs',
+                'Log in to create and share playlist.'
+            )
         },
     ];
 
