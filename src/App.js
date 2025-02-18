@@ -35,8 +35,8 @@ function App() {
         toastRef.current.show(message);
     }
 
-    function showPopover(title, description) {
-        popoverRef.current.show(title, description);
+    function showPopover(title, description, target) {
+        popoverRef.current.show(title, description, target);
     }
 
     return (
@@ -47,7 +47,7 @@ function App() {
 
                 <div className="flex-1 overflow-auto" ref={contentWrapperScrollingRef}>
                     <Header />
-                    <Main showToast={showToast} showPopover={showPopover} toggleEnableScrolling={toggleEnableScrolling} />
+                    <Main showToast={showToast} toggleEnableScrolling={toggleEnableScrolling} />
                 </div>
             </div>
 

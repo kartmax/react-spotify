@@ -57,7 +57,7 @@ const playlists = [
     }
 ];
 
-function Main({ showToast, showPopover, toggleEnableScrolling }) {
+function Main({ showToast, toggleEnableScrolling }) {
     return (
         <main className="text-white relative overflow-x-hidden">
             <div className="h-[275px] bg-gradient-to-b from-[#1f1f1f] to-[#121212] absolute w-full"></div>
@@ -74,7 +74,6 @@ function Main({ showToast, showPopover, toggleEnableScrolling }) {
                         {playlists.slice(0,9).map(playlist => <PlayList 
                             key={playlist.title} 
                             showToast={showToast} 
-                            showPopover={showPopover}
                             toggleEnableScrolling={toggleEnableScrolling} 
                             {...playlist} 
                         />)}
@@ -94,7 +93,6 @@ function Main({ showToast, showPopover, toggleEnableScrolling }) {
                         {playlists.slice(0,9).map(playlist => <PlayList 
                             key={playlist.title} 
                             showToast={showToast} 
-                            showPopover={showPopover} 
                             toggleEnableScrolling={toggleEnableScrolling} 
                             {...playlist} 
                         />)}
@@ -114,7 +112,6 @@ function Main({ showToast, showPopover, toggleEnableScrolling }) {
                         {playlists.slice(0,9).map(playlist => <PlayList 
                             key={playlist.title} 
                             showToast={showToast} 
-                            showPopover={showPopover}
                             toggleEnableScrolling={toggleEnableScrolling} 
                             {...playlist} 
                         />)}

@@ -24,17 +24,24 @@ function BasePopover (_, ref) {
         }
     });
 
-    function show (title, description) {
+    function show (title, description, target) {
+        moveTo(target);
         setText({...text, title, description});
         setClasses('');
     }
-
+    
     function hide () {
         setClasses(hiddenClasses);
     }
+    
+    function moveTo(target) {
+        const { top, right, height } = target.getBoundingClientRect();
+        nodeRef.current.style.top = `${top - height/2}px`;
+        nodeRef.current.style.left = `${right + 30}px`;
+    }
 
     return (
-        <div ref={nodeRef} className={`fixed top-[227px] left-[200px] z-40 bg-[#0e72ea] text-white tracking-wide rounded-lg shadow-3xl p-4 min-w-[330px] select-none transition duration-400s ${classes}`}>
+        <div ref={nodeRef} className={`fixed z-40 bg-[#0e72ea] text-white tracking-wide rounded-lg shadow-3xl p-4 min-w-[330px] select-none transition duration-400s ${classes}`}>
             <h3 className="text-lg font-bold mb-2">{text.title}</h3>
             <p className="text-xs">{text.description}</p>
 
@@ -43,7 +50,7 @@ function BasePopover (_, ref) {
                 <BaseButton primary>Login</BaseButton>
             </div>
 
-            <div className="absolute w-20 h-20 -left-20 bottom-5 flex justify-end items-center overflow-hidden pointer-events-none">
+            <div className="absolute w-10 h-10 -left-10 top-0 flex justify-end items-center overflow-hidden pointer-events-none">
                 <div className="w-3 h-3 bg-[#0e72ea] shadow-3xl rotate-45 translate-x-1/2 pointer-events-auto"></div>
             </div>
         </div>
